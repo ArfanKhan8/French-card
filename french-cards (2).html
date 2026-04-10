@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  French Cards v7
+  Rename to index.html → push to GitHub → Settings → Pages → Deploy from main
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>French Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F4F1EA; --sf:#FFF; --s2:#EDEAE1; --s3:#E0DCD2;
+  --tx:#18170F; --t2:#706E63; --t3:#ABA99D;
+  --br:rgba(24,23,15,.08); --b2:rgba(24,23,15,.15);
+  --gn:#166A47; --gbg:#E6F5EE; --gbd:#B8DFC9;
+  --rd:#B3200E; --rbg:#FBEEE9; --rbd:#F0BDB0;
+  --nv:#1A3A6E; --nbg:#EAF0FA; --nbd:#B8CCF0;
+  --am:#8A5A00; --abg:#FDF4E3; --abd:#E8C97A;
+  --sh:0 1px 3px rgba(24,23,15,.06),0 4px 16px rgba(24,23,15,.07);
+  --shl:0 2px 8px rgba(24,23,15,.08),0 12px 40px rgba(24,23,15,.1);
+  --r:16px;--rs:10px;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#131210;--sf:#1C1B17;--s2:#252318;--s3:#2E2C22;
+  --tx:#EAE6D8;--t2:#8A8778;--t3:#5A5850;
+  --br:rgba(234,230,216,.07);--b2:rgba(234,230,216,.14);
+  --gbg:#0B2418;--gbd:#1A4D32;--rbg:#200E0A;--rbd:#5C2018;
+  --nbg:#0C1A38;--nbd:#1A3068;--abg:#1C1204;--abd:#6B4A00;
+  --sh:0 1px 3px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.3);
+  --shl:0 2px 8px rgba(0,0,0,.4),0 12px 40px rgba(0,0,0,.4);
+}}
+html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);-webkit-font-smoothing:antialiased;touch-action:none;}
+.screen{display:none;height:100dvh;flex-direction:column;overflow:hidden;}
+.screen.active{display:flex;}
+
+/* ── HOME ── */
+#s-home{overflow-y:auto;touch-action:pan-y;}
+.home-hd{padding:1.75rem 1.5rem .75rem;}
+.home-logo{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:4px;}
+.home-title{font-family:'Instrument Serif',serif;font-size:30px;line-height:1.15;}
+.home-title em{font-style:italic;color:var(--t2);}
+.home-sub{font-size:13px;color:var(--t2);margin-top:4px;line-height:1.5;}
+
+/* streak bar */
+.streak-bar{margin:0 1.5rem;background:var(--sf);border:1px solid var(--br);border-radius:var(--rs);padding:11px 14px;display:flex;align-items:center;gap:12px;}
+.streak-val{font-family:'Instrument Serif',serif;font-size:26px;line-height:1;}
+.streak-label{font-size:12px;color:var(--t2);line-height:1.4;}
+.streak-label b{color:var(--tx);font-weight:500;display:block;}
+
+.sec-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:14px 1.5rem 6px;}
+
+.cat-list{display:flex;flex-direction:column;gap:6px;padding:0 1.5rem;}
+.cat-card{background:var(--sf);border:1px solid var(--br);border-radius:var(--rs);padding:12px 14px;cursor:pointer;transition:background .13s,border-color .13s;display:flex;align-items:center;gap:12px;}
+.cat-card:hover{background:var(--s2);border-color:var(--b2);}
+.cat-card:active{transform:scale(.99);}
+.cat-icon{font-size:18px;width:28px;text-align:center;flex-shrink:0;}
+.cat-body{flex:1;min-width:0;}
+.cat-name{font-size:14px;font-weight:500;}
+.cat-meta{font-size:12px;color:var(--t2);margin-top:1px;}
+.cat-bar{height:2px;background:var(--s3);border-radius:2px;margin-top:5px;overflow:hidden;}
+.cat-bar-fill{height:100%;background:var(--nv);border-radius:2px;}
+.cat-right{flex-shrink:0;}
+.badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:99px;white-space:nowrap;}
+.b-due{background:var(--gbg);color:var(--gn);}
+.b-new{background:var(--nbg);color:var(--nv);}
+.b-done{background:var(--s2);color:var(--t3);}
+
+.home-footer{padding:10px 1.5rem 2rem;display:flex;flex-direction:column;gap:8px;}
+.btn-ghost{width:100%;padding:10px 16px;border-radius:var(--rs);border:1px solid var(--b2);background:var(--sf);color:var(--t2);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:background .13s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-ghost:hover{background:var(--s2);color:var(--tx);}
+.home-tip{font-size:11px;color:var(--t3);text-align:center;line-height:1.7;}
+.home-tip kbd{font-family:'Inter',sans-serif;background:var(--s2);border:1px solid var(--br);border-radius:3px;padding:1px 5px;font-size:10px;}
+
+/* ── STUDY ── */
+#s-study{position:relative;}
+.topbar{display:flex;align-items:center;padding:13px 16px 0;flex-shrink:0;}
+.tb-back{background:none;border:none;cursor:pointer;color:var(--t3);font-size:13px;padding:4px 8px 4px 0;font-family:'Inter',sans-serif;font-weight:500;transition:color .12s;white-space:nowrap;}
+.tb-back:hover{color:var(--tx);}
+.tb-cat{font-size:13px;font-weight:500;color:var(--t2);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 8px;}
+.tb-right{display:flex;gap:2px;}
+.ghost-sm{background:none;border:none;cursor:pointer;color:var(--t3);font-size:12px;padding:4px 7px;border-radius:6px;font-family:'Inter',sans-serif;font-weight:500;transition:background .12s,color .12s;white-space:nowrap;}
+.ghost-sm:hover{background:var(--s2);color:var(--tx);}
+
+.prog{height:2px;background:var(--s3);margin:9px 16px 0;border-radius:2px;overflow:hidden;flex-shrink:0;}
+.prog-b{height:100%;background:var(--nv);border-radius:2px;transition:width .4s cubic-bezier(.4,0,.2,1);}
+
+.qrow{display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 0 0;flex-shrink:0;min-height:24px;}
+.qp{font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;}
+.qp-new{background:var(--nbg);color:var(--nv);}
+.qp-rev{background:var(--gbg);color:var(--gn);}
+.qp-ag{background:var(--rbg);color:var(--rd);}
+
+.stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px 16px;position:relative;overflow:hidden;}
+.sh-l,.sh-r{position:absolute;top:50%;transform:translateY(-50%);font-size:13px;font-weight:500;pointer-events:none;opacity:0;display:flex;flex-direction:column;align-items:center;gap:2px;z-index:2;}
+.sh-l{left:6px;color:var(--rd);}
+.sh-r{right:6px;color:var(--gn);}
+
+/* Card */
+.card{width:100%;max-width:480px;background:var(--sf);border-radius:var(--r);box-shadow:var(--shl);min-height:196px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:1.75rem 1.75rem 1.5rem;gap:0;cursor:grab;position:relative;user-select:none;will-change:transform;}
+.card:active{cursor:grabbing;}
+
+.c-lang{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:6px;}
+.c-word{font-family:'Instrument Serif',serif;line-height:1.15;color:var(--tx);word-break:break-word;hyphens:auto;}
+.sz-xl{font-size:44px;}.sz-lg{font-size:34px;}.sz-md{font-size:27px;}.sz-sm{font-size:21px;}.sz-xs{font-size:17px;}
+
+/* Phonetic hint */
+.c-phonetic{font-size:12px;color:var(--t3);margin-top:5px;font-style:italic;letter-spacing:.02em;}
+
+/* Grammar note */
+.c-note{font-size:11px;color:var(--am);background:var(--abg);border:1px solid var(--abd);border-radius:6px;padding:3px 9px;margin-top:8px;line-height:1.5;}
+
+.divider{width:100%;height:1px;background:var(--br);margin:14px 0;}
+
+.ans-area{width:100%;display:flex;flex-direction:column;align-items:center;gap:3px;opacity:0;transform:translateY(5px);transition:opacity .25s,transform .25s;pointer-events:none;}
+.ans-area.vis{opacity:1;transform:none;pointer-events:auto;}
+.a-lang{font-size:9px;font-weight:500;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:4px;}
+.a-word{font-family:'Instrument Serif',serif;line-height:1.2;color:var(--tx);word-break:break-word;hyphens:auto;}
+.a-tip{font-size:12px;color:var(--t2);font-style:italic;margin-top:3px;}
+
+.ov{position:absolute;inset:0;border-radius:var(--r);pointer-events:none;opacity:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;gap:6px;}
+.ov-m{background:var(--rbg);color:var(--rd);}
+.ov-g{background:var(--gbg);color:var(--gn);}
+
+/* Hint button */
+.hint-btn{margin-top:10px;background:none;border:1px solid var(--br);border-radius:var(--rs);padding:7px 18px;font-size:12px;color:var(--t3);font-family:'Inter',sans-serif;cursor:pointer;transition:background .12s,color .12s,border-color .12s;}
+.hint-btn:hover{background:var(--s2);color:var(--t2);border-color:var(--b2);}
+.hint-btn.gone{opacity:0;pointer-events:none;}
+
+/* Show answer btn */
+.show-btn{margin-top:14px;background:var(--tx);color:var(--bg);border:none;border-radius:var(--rs);padding:13px 48px;font-size:15px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;transition:opacity .14s,transform .08s;flex-shrink:0;}
+.show-btn:hover{opacity:.85;}.show-btn:active{transform:scale(.97);}
+.show-btn.gone{opacity:0;pointer-events:none;}
+
+/* Typing mode input */
+.type-area{margin-top:14px;width:100%;max-width:480px;flex-shrink:0;display:none;}
+.type-area.vis{display:flex;flex-direction:column;gap:8px;}
+.type-input{width:100%;padding:13px 16px;border:1.5px solid var(--b2);border-radius:var(--rs);background:var(--sf);color:var(--tx);font-family:'Instrument Serif',serif;font-size:20px;text-align:center;outline:none;transition:border-color .15s;}
+.type-input:focus{border-color:var(--nv);}
+.type-input.correct{border-color:var(--gn);background:var(--gbg);}
+.type-input.wrong{border-color:var(--rd);background:var(--rbg);}
+.type-submit{width:100%;padding:12px;border:none;border-radius:var(--rs);background:var(--tx);color:var(--bg);font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:opacity .14s;}
+.type-submit:hover{opacity:.85;}
+.type-feedback{font-size:13px;text-align:center;padding:8px;border-radius:var(--rs);display:none;}
+.type-feedback.show{display:block;}
+.tf-correct{background:var(--gbg);color:var(--gn);}
+.tf-wrong{background:var(--rbg);color:var(--rd);}
+
+/* Rating buttons */
+.rrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:480px;margin-top:10px;flex-shrink:0;opacity:0;pointer-events:none;transform:translateY(8px);transition:opacity .25s,transform .25s;}
+.rrow.vis{opacity:1;pointer-events:auto;transform:none;}
+.rbtn{border-radius:var(--rs);border:1.5px solid var(--br);background:var(--sf);padding:11px 8px;cursor:pointer;font-family:'Inter',sans-serif;transition:background .12s,border-color .12s,transform .08s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.rbtn:active{transform:scale(.96);}
+.rbtn-lbl{font-size:13px;font-weight:500;}
+.rbtn-nxt{font-size:11px;color:var(--t3);}
+.rbtn-dt{font-size:10px;color:var(--t3);}
+.rb-m{border-color:var(--rbd);}
+.rb-m .rbtn-lbl{color:var(--rd);}
+.rb-m:hover{background:var(--rbg);}
+.rb-g{border-color:var(--gbd);}
+.rb-g .rbtn-lbl{color:var(--gn);}
+.rb-g:hover{background:var(--gbg);}
+.sw-tip{font-size:10px;color:var(--t3);text-align:center;margin-top:5px;flex-shrink:0;opacity:0;transition:opacity .25s;}
+.sw-tip.vis{opacity:1;}
+
+/* ── DONE ── */
+#s-done{overflow-y:auto;touch-action:pan-y;}
+.done-wrap{max-width:420px;width:100%;margin:0 auto;padding:2rem 1.5rem 3rem;display:flex;flex-direction:column;align-items:center;gap:16px;}
+.done-icon{width:64px;height:64px;border-radius:50%;background:var(--gbg);border:1px solid var(--gbd);display:flex;align-items:center;justify-content:center;font-size:28px;animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.done-title{font-family:'Instrument Serif',serif;font-size:28px;text-align:center;}
+.done-sub{font-size:14px;color:var(--t2);line-height:1.6;text-align:center;}
+.done-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;}
+.dtile{background:var(--sf);border:1px solid var(--br);border-radius:var(--rs);padding:11px 6px;text-align:center;}
+.dtile-l{font-size:10px;color:var(--t3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;}
+.dtile-v{font-family:'Instrument Serif',serif;font-size:24px;}
+
+/* Progress chart */
+.chart-box{width:100%;background:var(--sf);border:1px solid var(--br);border-radius:var(--rs);overflow:hidden;}
+.chart-hd{padding:10px 14px;border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between;}
+.chart-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);}
+.chart-total{font-size:13px;font-weight:500;}
+.chart-area{padding:14px 14px 10px;}
+.chart-bars{display:flex;align-items:flex-end;gap:3px;height:56px;}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.chart-bar{width:100%;border-radius:3px 3px 0 0;background:var(--nbg);min-height:2px;transition:height .3s;}
+.chart-bar.today{background:var(--nv);}
+.chart-day{font-size:9px;color:var(--t3);}
+
+.sched-box{width:100%;background:var(--sf);border:1px solid var(--br);border-radius:var(--rs);overflow:hidden;}
+.sched-hd{padding:10px 14px;border-bottom:1px solid var(--br);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);}
+.sched-row{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;border-bottom:1px solid var(--br);font-size:13px;}
+.sched-row:last-child{border-bottom:none;}
+.sched-k{color:var(--t2);}
+.sched-v{font-weight:500;}
+.done-actions{width:100%;display:flex;flex-direction:column;gap:7px;}
+.btn{width:100%;padding:12px 20px;border-radius:var(--rs);border:1px solid var(--b2);background:var(--sf);color:var(--tx);font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:background .13s,transform .08s,opacity .13s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn:hover{background:var(--s2);}.btn:active{transform:scale(.98);}
+.btn-p{background:var(--tx);color:var(--bg);border-color:transparent;}
+.btn-p:hover{background:var(--tx);opacity:.88;}
+.btn-sm{width:auto;padding:8px 16px;font-size:13px;}
+
+/* ── STATS PANEL ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:100;padding:20px;}
+.overlay.open{display:flex;animation:fade .2s;}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.panel{background:var(--sf);border-radius:var(--r);border:1px solid var(--br);padding:1.5rem;width:100%;max-width:440px;max-height:85vh;overflow-y:auto;animation:slup .3s cubic-bezier(.4,0,.2,1);}
+@keyframes slup{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.ph{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+.ph-t{font-family:'Instrument Serif',serif;font-size:22px;}
+.ph-x{background:none;border:none;font-size:22px;cursor:pointer;color:var(--t2);padding:0 4px;line-height:1;}
+.ph-x:hover{color:var(--tx);}
+.ps{margin-bottom:18px;}
+.ps-t{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:8px;}
+.sg{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.st{background:var(--s2);border-radius:var(--rs);padding:11px;}
+.st-l{font-size:11px;color:var(--t3);margin-bottom:3px;}
+.st-v{font-family:'Instrument Serif',serif;font-size:22px;}
+.sr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--br);}
+.sr:last-child{border-bottom:none;}
+.sr-l{font-size:14px;}
+.sr-h{font-size:12px;color:var(--t2);margin-top:1px;}
+.sc{padding:6px 8px;border:1px solid var(--b2);border-radius:6px;background:var(--s2);color:var(--tx);font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;}
+.btn-danger{background:var(--rbg);color:var(--rd);border-color:var(--rbd);margin-top:4px;}
+.btn-danger:hover{filter:brightness(.94);}
+
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--tx);color:var(--bg);font-size:13px;font-weight:500;padding:9px 20px;border-radius:99px;pointer-events:none;opacity:0;transition:opacity .22s,transform .22s;white-space:nowrap;z-index:50;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+@media(max-width:380px){.sz-xl{font-size:36px;}.done-title{font-size:24px;}}
+</style>
+</head>
+<body>
+
+<!-- ══ HOME ══ -->
+<div class="screen active" id="s-home">
+  <div class="home-hd">
+    <div class="home-logo">🇫🇷 French Cards</div>
+    <h1 class="home-title">Bonjour,<br><em>let's study.</em></h1>
+    <p class="home-sub" id="home-sub">Pick a category to begin.</p>
+  </div>
+
+  <div class="streak-bar" style="margin-bottom:4px">
+    <div class="streak-val" id="streak-val">0🔥</div>
+    <div class="streak-label">
+      <b id="streak-label-main">Day streak</b>
+      <span id="streak-label-sub">Study every day to keep it going</span>
+    </div>
+  </div>
+
+  <div class="sec-label">Categories</div>
+  <div class="cat-list" id="cat-list"></div>
+
+  <div class="home-footer">
+    <button class="btn-ghost" onclick="openProgress()">📊 View progress chart</button>
+    <button class="btn-ghost" onclick="openPanel()">⚙️ Settings</button>
+    <p class="home-tip"><kbd>Space</kbd> reveal · <kbd>1</kbd> missed · <kbd>2</kbd> got it · <kbd>T</kbd> toggle typing mode</p>
+  </div>
+</div>
+
+<!-- ══ STUDY ══ -->
+<div class="screen" id="s-study">
+  <div class="topbar">
+    <button class="tb-back" onclick="goHome()">← Home</button>
+    <span class="tb-cat" id="tb-cat"></span>
+    <div class="tb-right">
+      <button class="ghost-sm" id="mode-toggle" onclick="toggleMode()">⌨️ Type</button>
+      <button class="ghost-sm" onclick="openPanel()">Settings</button>
+    </div>
+  </div>
+  <div class="prog"><div class="prog-b" id="prog-b" style="width:0%"></div></div>
+  <div class="qrow" id="qrow"></div>
+
+  <div class="stage">
+    <div class="sh-l" id="sh-l"><span style="font-size:20px">←</span>Missed it</div>
+    <div class="sh-r" id="sh-r">Got it<span style="font-size:20px">→</span></div>
+
+    <div class="card" id="card">
+      <div class="c-lang" id="c-lang">FRENCH</div>
+      <div class="c-word sz-xl" id="c-word">—</div>
+      <div class="c-phonetic" id="c-phonetic"></div>
+      <div class="c-note" id="c-note" style="display:none"></div>
+      <div class="divider" id="divider" style="opacity:0;margin:10px 0 6px;"></div>
+      <div class="ans-area" id="ans-area">
+        <div class="a-lang" id="a-lang">ENGLISH</div>
+        <div class="a-word sz-lg" id="a-word"></div>
+        <div class="a-tip" id="a-tip"></div>
+      </div>
+      <div class="ov ov-m" id="ov-m">✕ Missed it</div>
+      <div class="ov ov-g" id="ov-g">✓ Got it</div>
+    </div>
+
+    <button class="hint-btn" id="hint-btn" onclick="showHint()">Show first letter</button>
+    <button class="show-btn" id="show-btn" onclick="reveal()">Show Answer</button>
+
+    <!-- Typing mode -->
+    <div class="type-area" id="type-area">
+      <input class="type-input" id="type-input" type="text" placeholder="Type the translation…" autocomplete="off" autocorrect="off" spellcheck="false">
+      <button class="type-submit" onclick="checkTyping()">Check answer</button>
+      <div class="type-feedback" id="type-feedback"></div>
+    </div>
+
+    <div class="rrow" id="rrow">
+      <button class="rbtn rb-m" onclick="rate(false)">
+        <span class="rbtn-lbl">✕ Missed it</span>
+        <span class="rbtn-nxt" id="rn-m">Tomorrow</span>
+        <span class="rbtn-dt"  id="rd-m"></span>
+      </button>
+      <button class="rbtn rb-g" onclick="rate(true)">
+        <span class="rbtn-lbl">✓ Got it</span>
+        <span class="rbtn-nxt" id="rn-g">In 4 days</span>
+        <span class="rbtn-dt"  id="rd-g"></span>
+      </button>
+    </div>
+    <div class="sw-tip" id="sw-tip">swipe ← or → · or tap a button</div>
+  </div>
+</div>
+
+<!-- ══ DONE ══ -->
+<div class="screen" id="s-done">
+  <div class="done-wrap">
+    <div class="done-icon" id="done-icon">✓</div>
+    <h2 class="done-title" id="done-title">Session done!</h2>
+    <p class="done-sub" id="d-sub"></p>
+    <div class="done-tiles">
+      <div class="dtile"><div class="dtile-l">Reviewed</div><div class="dtile-v" id="d-rev">0</div></div>
+      <div class="dtile"><div class="dtile-l">Streak</div><div class="dtile-v" id="d-str">0🔥</div></div>
+      <div class="dtile"><div class="dtile-l">Learned</div><div class="dtile-v" id="d-tot">0</div></div>
+    </div>
+    <div class="chart-box" id="done-chart"></div>
+    <div class="sched-box"><div class="sched-hd">Coming up</div><div id="sched-rows"></div></div>
+    <div class="done-actions">
+      <button class="btn btn-p" onclick="goHome()">← Back to categories</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROGRESS SCREEN ══ -->
+<div class="screen" id="s-progress">
+  <div style="overflow-y:auto;touch-action:pan-y;flex:1;">
+    <div style="max-width:440px;margin:0 auto;padding:2rem 1.5rem 3rem;">
+      <button style="background:none;border:none;cursor:pointer;color:var(--t3);font-size:13px;font-family:'Inter',sans-serif;font-weight:500;padding:0;margin-bottom:16px;" onclick="showScreen('s-home')">← Home</button>
+      <h2 style="font-family:'Instrument Serif',serif;font-size:26px;margin-bottom:4px;">Your progress</h2>
+      <p style="font-size:13px;color:var(--t2);margin-bottom:20px;">Cards reviewed per day over the last 2 weeks.</p>
+      <div class="chart-box" id="prog-chart-box"></div>
+      <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px;" id="prog-cat-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STATS PANEL ══ -->
+<div class="overlay" id="panel" onclick="closePanelBg(event)">
+  <div class="panel">
+    <div class="ph"><span class="ph-t">Settings</span><button class="ph-x" onclick="closePanel()">×</button></div>
+    <div class="ps">
+      <div class="ps-t">Overall stats</div>
+      <div class="sg">
+        <div class="st"><div class="st-l">Total cards</div><div class="st-v" id="sp-tot">0</div></div>
+        <div class="st"><div class="st-l">Learned</div><div class="st-v" id="sp-lrn">0</div></div>
+        <div class="st"><div class="st-l">Due today</div><div class="st-v" id="sp-due">0</div></div>
+        <div class="st"><div class="st-l">Day streak</div><div class="st-v" id="sp-str">0🔥</div></div>
+      </div>
+    </div>
+    <div class="ps">
+      <div class="ps-t">Preferences</div>
+      <div class="sr">
+        <div><div class="sr-l">New cards per day</div><div class="sr-h">10 is ideal for 25 min/day</div></div>
+        <input type="number" class="sc" id="set-npd" min="1" max="100" value="10" style="width:62px" onchange="setSetting('newPerDay',+this.value)">
+      </div>
+      <div class="sr">
+        <div><div class="sr-l">Card front language</div><div class="sr-h">Which side you see first</div></div>
+        <select class="sc" id="set-lang" onchange="setSetting('frontLang',this.value)">
+          <option value="fr">French → English</option>
+          <option value="en">English → French</option>
+        </select>
+      </div>
+      <div class="sr">
+        <div><div class="sr-l">Study mode</div><div class="sr-h">Typing is harder and more effective</div></div>
+        <select class="sc" id="set-mode" onchange="setSetting('mode',this.value)">
+          <option value="flip">Flashcard (flip)</option>
+          <option value="type">Typing (active recall)</option>
+        </select>
+      </div>
+      <div class="sr">
+        <div><div class="sr-l">Show phonetic hints</div><div class="sr-h">How to pronounce each word</div></div>
+        <select class="sc" id="set-phonetic" onchange="setSetting('showPhonetic',this.value==='true')">
+          <option value="true">On</option>
+          <option value="false">Off</option>
+        </select>
+      </div>
+    </div>
+    <div class="ps">
+      <div class="ps-t">Danger zone</div>
+      <button class="btn btn-danger btn-sm" onclick="resetAll()">Reset all progress</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+'use strict';
+
+/* ══════════════════════════════════════
+   DECK DATA
+   Each card: [french, english, phonetic?, grammar_note?]
+   phonetic uses readable English approximation
+   stressed syllable in CAPS
+══════════════════════════════════════ */
+const CATEGORIES = [
+{id:'core',name:'Core Vocabulary',icon:'🔤',desc:'120 most essential words',
+cards:[
+// Articles
+["le","the (masc)","luh","Masculine: le livre (the book)"],
+["la","the (fem)","lah","Feminine: la table (the table)"],
+["les","the (plural)","lay","All plurals use les"],
+["un","a / an (masc)","uhn","Masculine indefinite article"],
+["une","a / an (fem)","oon","Feminine indefinite article"],
+["des","some","day","Plural of un/une: des livres"],
+["ce / cet","this / that (masc)","suh / set","cet before vowel sounds: cet homme"],
+["cette","this / that (fem)","set","Feminine of ce"],
+["mon","my (masc)","mohn","mon ami — my friend (m)"],
+["ma","my (fem)","mah","ma famille — my family"],
+["mes","my (plural)","may","mes amis — my friends"],
+["ton","your (masc, informal)","tohn","Use with tu"],
+["ta","your (fem, informal)","tah","Use with tu"],
+["son","his / her (masc)","sohn","son père / sa mère — his/her father/mother"],
+["sa","his / her (fem)","sah",""],
+["notre","our","NOH-truh","notre maison — our house"],
+["votre","your (formal/plural)","VOH-truh","Use with vous"],
+["leur","their","luhr","leur voiture — their car"],
+// Pronouns
+["je","I","zhuh","Becomes j' before vowels: j'ai"],
+["tu","you (informal)","too","Use with friends, children, family"],
+["il","he","eel","Also used for masculine things"],
+["elle","she","el","Also used for feminine things"],
+["on","one / we (informal)","ohn","On mange = We eat (casual)"],
+["nous","we","noo","More formal than on"],
+["vous","you (formal or plural)","voo","Always polite with strangers"],
+["ils","they (masc or mixed)","eel","Use for any group with at least one male"],
+["elles","they (fem)","el","Only for all-female groups"],
+["moi","me / I (emphatic)","mwah","Moi, je parle — As for me, I speak"],
+["lui","him / her (indirect)","lwee","Je lui parle — I speak to him/her"],
+["eux","them (masc)","uh","Emphatic: eux, ils viennent"],
+// Conjunctions
+["et","and","ay",""],
+["ou","or","oo",""],
+["mais","but","may",""],
+["donc","so / therefore","dohnk",""],
+["alors","then / so","ah-LOR","Alors, qu'est-ce qu'on fait?"],
+["si","if / so","see","Si + present → future: si tu viens..."],
+["comme","like / as","kom",""],
+["quand","when","kahn","quand je serai grand"],
+["parce que","because","par-suh-KUH",""],
+["que","that / which","kuh","Je pense que c'est bien"],
+["qui","who / which (subject)","kee","La femme qui parle"],
+["dont","whose / of which","dohn","Le livre dont j'ai besoin"],
+["car","because (formal)","kar","More formal than parce que"],
+["puisque","since / because","pwee-SKUH",""],
+// Prepositions
+["à","at / to / in","ah","à Paris, à midi, à toi"],
+["de","of / from","duh","Becomes du / de la / des with articles"],
+["en","in / by","ahn","en France, en voiture"],
+["dans","in / inside","dahn","dans la maison"],
+["sur","on","soor","sur la table"],
+["sous","under","soo","sous le lit"],
+["avec","with","ah-VEK","avec moi"],
+["sans","without","sahn","sans toi"],
+["pour","for","poor","pour toi, pour aller"],
+["par","by / through","par","par ici, fait par lui"],
+["entre","between","AHN-truh","entre nous"],
+["chez","at someone's place","shay","chez moi — at my place"],
+["vers","towards / around","vair","vers midi — around noon"],
+// Common adverbs
+["très","very","tray","très bien — very good"],
+["trop","too much","troh","c'est trop cher — it's too expensive"],
+["assez","enough / quite","ah-SAY","assez grand — big enough"],
+["peu","little / few","puh","un peu — a little"],
+["beaucoup","a lot","boh-KOO","beaucoup de travail"],
+["plus","more / no longer","ploo/ploo","plus de pain = more bread; ne...plus = no longer"],
+["moins","less","mwahn","moins cher — less expensive"],
+["aussi","also / too","oh-SEE","moi aussi — me too"],
+["déjà","already","day-ZHAH","tu as déjà mangé?"],
+["encore","still / again","ahn-KOR","encore une fois — one more time"],
+["toujours","always / still","too-ZHOOR","toujours là — still there"],
+["jamais","never","zhah-MAY","ne...jamais — never"],
+["souvent","often","soo-VAHN",""],
+["parfois","sometimes","par-FWAH",""],
+["vite","quickly","veet",""],
+["bien","well","byahn","ça va bien — I'm doing well"],
+["mal","badly","mal","ça va mal — things are bad"],
+["ici","here","ee-SEE",""],
+["là","there","lah","là-bas — over there"],
+["maintenant","now","mahn-tuh-NAHN",""],
+["bientôt","soon","byahn-TOH","à bientôt — see you soon"],
+["hier","yesterday","ee-YAIR",""],
+["aujourd'hui","today","oh-zhoor-DWEE",""],
+["demain","tomorrow","duh-MAHN",""],
+["oui","yes","wee",""],
+["non","no","nohn",""],
+["peut-être","maybe","puh-TET-ruh",""],
+["bien sûr","of course","byahn SOOR",""],
+// Top nouns
+["une maison","a house","may-ZOHN","Feminine noun"],
+["une femme","a woman / wife","fahm",""],
+["un homme","a man","om","The H is silent"],
+["un enfant","a child","ahn-FAHN",""],
+["un ami","a friend (m)","ah-MEE","une amie = friend (f)"],
+["une ville","a city","veel",""],
+["un pays","a country","pay-EE",""],
+["de l'eau","water","duh LOH","Partitive article"],
+["du pain","bread","pwahn","du = de + le"],
+["de l'argent","money","dar-ZHAHN","Also means 'silver'"],
+["le temps","weather / time","tahn","Il fait beau temps"],
+["un problème","a problem","pro-BLEM",""],
+["une question","a question","kes-TYOHN",""],
+["le travail","work","tra-VAYE",""],
+]},
+{id:'verbs',name:'Essential Verbs',icon:'⚡',desc:'80 core verbs',
+cards:[
+["être","to be","ET-ruh","Most important verb. je suis, tu es, il est, nous sommes, vous êtes, ils sont"],
+["avoir","to have","ah-VWAR","je ai→j'ai, tu as, il a, nous avons, vous avez, ils ont"],
+["faire","to do / make","fair","je fais, tu fais, il fait, nous faisons, vous faites, ils font"],
+["aller","to go","ah-LAY","je vais, tu vas, il va, nous allons, vous allez, ils vont"],
+["vouloir","to want","voo-LWAR","je veux, tu veux, il veut, nous voulons, vous voulez, ils veulent"],
+["pouvoir","can / to be able to","poo-VWAR","je peux, tu peux, il peut, nous pouvons, vous pouvez, ils peuvent"],
+["devoir","must / have to","duh-VWAR","je dois, tu dois, il doit, nous devons, vous devez, ils doivent"],
+["savoir","to know (a fact)","sah-VWAR","je sais, tu sais, il sait, nous savons, vous savez, ils savent"],
+["connaître","to know (a person)","koh-NET-ruh","je connais — I know (someone)"],
+["venir","to come","vuh-NEER","je viens, tu viens, il vient, nous venons, vous venez, ils viennent"],
+["voir","to see","vwar","je vois, tu vois, il voit, nous voyons, vous voyez, ils voient"],
+["prendre","to take","PRAHN-druh","je prends, il prend, nous prenons"],
+["mettre","to put / wear","MET-ruh","je mets, il met, nous mettons"],
+["donner","to give","doh-NAY","Regular -er verb"],
+["recevoir","to receive","ruh-suh-VWAR","je reçois, il reçoit, nous recevons"],
+["chercher","to look for","sher-SHAY","Regular -er verb"],
+["trouver","to find","troo-VAY","Regular -er verb"],
+["perdre","to lose","PAIR-druh","je perds, il perd, nous perdons"],
+["garder","to keep","gar-DAY","Regular -er verb"],
+["laisser","to leave / let","lay-SAY","Laisse-moi tranquille — leave me alone"],
+["porter","to carry / wear","por-TAY","porter un manteau — to wear a coat"],
+["ouvrir","to open","oo-VREER","j'ouvre, tu ouvres, il ouvre"],
+["fermer","to close","fair-MAY","Regular -er verb"],
+["commencer","to begin","koh-mahn-SAY","je commence — note ç before a/o"],
+["finir","to finish","fee-NEER","Regular -ir: je finis, nous finissons"],
+["attendre","to wait","ah-TAHN-druh","j'attends — I'm waiting"],
+["répondre","to answer","ray-POHN-druh","je réponds"],
+["demander","to ask","duh-mahn-DAY","demander à quelqu'un — to ask someone"],
+["appeler","to call","ah-puh-LAY","je m'appelle — my name is (lit. I call myself)"],
+["envoyer","to send","ahn-vwah-YAY","j'envoie, nous envoyons"],
+["acheter","to buy","ash-TAY","j'achète — note accent change"],
+["vendre","to sell","VAHN-druh","je vends, il vend"],
+["payer","to pay","pay-YAY","je paie / je paye"],
+["coûter","to cost","koo-TAY","ça coûte combien? — how much does it cost?"],
+["travailler","to work","tra-vaye-YAY","Regular -er verb"],
+["aider","to help","ay-DAY","Regular -er verb"],
+["utiliser","to use","oo-tee-lee-ZAY","Regular -er verb"],
+["choisir","to choose","shwah-ZEER","Regular -ir verb"],
+["parler","to speak","par-LAY","Regular -er verb — the model verb"],
+["dire","to say / tell","deer","je dis, tu dis, il dit, nous disons, vous dites, ils disent"],
+["écouter","to listen","ay-koo-TAY","Regular -er verb. Different from entendre (to hear)"],
+["entendre","to hear","ahn-TAHN-druh","Passive hearing. j'entends"],
+["lire","to read","leer","je lis, tu lis, il lit, nous lisons"],
+["écrire","to write","ay-KREER","j'écris, tu écris, il écrit, nous écrivons"],
+["regarder","to watch / look at","ruh-gar-DAY","Regular -er verb"],
+["montrer","to show","mohn-TRAY","Regular -er verb"],
+["expliquer","to explain","ex-plee-KAY","Regular -er verb"],
+["penser","to think","pahn-SAY","je pense que — I think that"],
+["croire","to believe","krwar","je crois, tu crois, il croit, nous croyons"],
+["comprendre","to understand","kohm-PRAHN-druh","Like prendre — je comprends"],
+["apprendre","to learn","ah-PRAHN-druh","Like prendre — j'apprends le français"],
+["aimer","to like / love","ay-MAY","j'aime = I love/like. Regular -er verb"],
+["adorer","to adore / love","ah-doh-RAY","Stronger than aimer"],
+["détester","to hate","day-tes-TAY","Regular -er verb"],
+["espérer","to hope","es-pay-RAY","j'espère — I hope"],
+["sembler","to seem","sahm-BLAY","il semble que — it seems that"],
+["manger","to eat","mahn-ZHAY","nous mangeons — note e before ons"],
+["boire","to drink","bwar","je bois, tu bois, il boit, nous buvons"],
+["dormir","to sleep","dor-MEER","je dors, tu dors, il dort, nous dormons"],
+["se réveiller","to wake up","ruh-vay-YAY","Reflexive verb: je me réveille"],
+["s'habiller","to get dressed","ah-bee-YAY","Reflexive: je m'habille"],
+["se laver","to wash oneself","lah-VAY","Reflexive: je me lave"],
+["habiter","to live / reside","ah-bee-TAY","j'habite à Montreal — I live in Montreal"],
+["cuisiner","to cook","kwee-zee-NAY","Regular -er verb"],
+["nettoyer","to clean","net-twah-YAY","je nettoie, nous nettoyons"],
+["partir","to leave (depart)","par-TEER","je pars, tu pars, il part, nous partons"],
+["arriver","to arrive","ah-ree-VAY","Regular -er verb"],
+["entrer","to enter","ahn-TRAY","Regular -er verb"],
+["sortir","to go out","sor-TEER","Like partir: je sors, nous sortons"],
+["monter","to go up / get on","mohn-TAY","Regular -er verb"],
+["descendre","to go down","day-SAHN-druh","je descends"],
+["rester","to stay","res-TAY","Regular -er verb"],
+["rentrer","to return home","rahn-TRAY","Regular -er verb"],
+["marcher","to walk","mar-SHAY","Regular -er verb. Also: to work (for objects)"],
+["courir","to run","koo-REER","je cours, nous courons"],
+["conduire","to drive","kohn-DWEER","je conduis, nous conduisons"],
+["voyager","to travel","vwah-yah-ZHAY","nous voyageons"],
+]},
+{id:'phrases',name:'Everyday Phrases',icon:'💬',desc:'70 conversational phrases',
+cards:[
+["Bonjour !","Hello! / Good morning!","bohn-ZHOOR","Use until ~6pm"],
+["Bonsoir !","Good evening!","bohn-SWAR","Use after ~6pm"],
+["Salut !","Hi! (informal)","sah-LOO","Only with friends"],
+["Bonne nuit !","Good night!","bon NWEE","When going to bed"],
+["Au revoir !","Goodbye!","oh ruh-VWAR",""],
+["À bientôt !","See you soon!","ah byahn-TOH",""],
+["À tout à l'heure !","See you later!","ah too tah LUHR","For same-day meetings"],
+["À demain !","See you tomorrow!","ah duh-MAHN",""],
+["S'il vous plaît","Please (formal)","seel voo PLAY","With vous"],
+["S'il te plaît","Please (informal)","seel tuh PLAY","With tu"],
+["Merci beaucoup","Thank you very much","mair-SEE boh-KOO",""],
+["De rien","You're welcome","duh RYAHN","Lit. 'of nothing'"],
+["Je vous en prie","You're welcome (formal)","zhuh voo-zahn PREE","More elegant than de rien"],
+["Excusez-moi","Excuse me (formal)","ex-koo-ZAY mwah",""],
+["Pardon","Sorry / Excuse me","par-DOHN",""],
+["Je suis désolé(e)","I'm sorry","zhuh swee day-zoh-LAY","Add -e for feminine"],
+["Comment vous appelez-vous ?","What's your name? (formal)","koh-mahn voo-zah-puh-LAY voo",""],
+["Comment tu t'appelles ?","What's your name? (informal)","koh-mahn too tah-PEL",""],
+["Je m'appelle…","My name is…","zhuh mah-PEL","Lit. 'I call myself'"],
+["Enchanté(e)","Nice to meet you","ahn-shahn-TAY","Add -e if you're female"],
+["D'où venez-vous ?","Where are you from?","doo vuh-NAY voo","Formal"],
+["Je viens du Canada","I'm from Canada","zhuh vyahn doo kah-nah-DAH",""],
+["Comment allez-vous ?","How are you? (formal)","koh-mahn tah-LAY voo",""],
+["Ça va ?","How are you? (informal)","sah VAH","Lit. 'Is it going?'"],
+["Ça va bien, merci","I'm fine, thank you","sah vah byahn",""],
+["Pas mal","Not bad","pah MAL","Common casual response"],
+["Comme ci comme ça","So-so","kom see kom SAH",""],
+["Je suis fatigué(e)","I'm tired","zhuh swee fah-tee-GAY",""],
+["Je suis occupé(e)","I'm busy","zhuh swee oh-koo-PAY",""],
+["Je ne comprends pas","I don't understand","zhuh nuh kohm-PRAHN pah",""],
+["Je ne sais pas","I don't know","zhuh nuh SAY pah","In casual speech: J'sais pas"],
+["Pouvez-vous répéter ?","Can you repeat?","poo-VAY voo ray-pay-TAY",""],
+["Parlez plus lentement","Speak more slowly","par-LAY ploo lahn-tuh-MAHN",""],
+["Qu'est-ce que ça veut dire ?","What does that mean?","kes-kuh sah vuh DEER",""],
+["Parlez-vous anglais ?","Do you speak English?","par-LAY voo ahn-GLAY",""],
+["Je parle un peu français","I speak a little French","zhuh parl uhn puh frahn-SAY",""],
+["J'ai besoin d'aide","I need help","zhay buh-ZWAHN ded",""],
+["Je voudrais…","I would like…","zhuh voo-DRAY","Polite conditional form"],
+["Où est… ?","Where is…?","oo ay",""],
+["C'est combien ?","How much is it?","say kohm-BYAHN",""],
+["C'est trop cher","It's too expensive","say troh SHAIR",""],
+["L'addition, s'il vous plaît","The bill, please","lah-dee-SYOHN","In a restaurant"],
+["C'est bien !","That's good!","say byahn",""],
+["C'est super !","That's great!","say soo-PAIR","Informal"],
+["C'est dommage","That's a shame","say doh-MAZH",""],
+["C'est vrai","That's true","say vray",""],
+["Je suis d'accord","I agree","zhuh swee dah-KOR",""],
+["Je ne suis pas d'accord","I disagree","",""],
+["Je pense que…","I think that…","zhuh pahns kuh",""],
+["À mon avis…","In my opinion…","ah mohn ah-VEE",""],
+["Il fait beau","The weather is nice","eel fay BOH",""],
+["Il pleut","It's raining","eel PLUH","Irregular: pleuvoir"],
+["Il fait froid","It's cold","eel fay FRWAH",""],
+["Il fait chaud","It's hot","eel fay SHOH",""],
+["J'ai faim","I'm hungry","zhay FAHM","Lit. 'I have hunger'"],
+["J'ai soif","I'm thirsty","zhay SWAF","Lit. 'I have thirst'"],
+["Il faut…","It is necessary to…","eel FOH","Impersonal: il faut manger"],
+["Pas de problème","No problem","pah duh prob-LEM",""],
+["Bonne chance !","Good luck!","bon SHAHNSS",""],
+["Félicitations !","Congratulations!","fay-lee-see-tah-SYOHN",""],
+["Bienvenue !","Welcome!","byahn-vuh-NOO",""],
+["Avec plaisir","With pleasure","ah-vek play-ZEER","Formal way to say yes"],
+["Tant mieux","So much the better","tahn MYUH",""],
+["Tant pis","Too bad","tahn PEE",""],
+["Ça ne fait rien","It doesn't matter","sah nuh fay RYAHN",""],
+["N'importe quoi","Anything / What nonsense","nahm-PORT kwah",""],
+["C'est la vie","That's life","say lah VEE",""],
+]},
+{id:'numbers',name:'Numbers, Time & Dates',icon:'🔢',desc:'55 cards',
+cards:[
+["zéro","0","ZAY-roh",""],
+["un / une","1","uhn / oon","Masculine / feminine"],
+["deux","2","duh",""],
+["trois","3","trwah",""],
+["quatre","4","KAH-truh",""],
+["cinq","5","sahnk",""],
+["six","6","sees",""],
+["sept","7","set",""],
+["huit","8","weet",""],
+["neuf","9","nuhf",""],
+["dix","10","dees",""],
+["onze","11","ohnz",""],
+["douze","12","dooz",""],
+["treize","13","trez",""],
+["quatorze","14","kah-TORZ",""],
+["quinze","15","kahnz",""],
+["seize","16","sez",""],
+["dix-sept","17","dee-SET",""],
+["dix-huit","18","dee-ZWEET",""],
+["dix-neuf","19","deez-NUHF",""],
+["vingt","20","vahn","The T is silent usually"],
+["vingt et un","21","vahn-tay-UHN",""],
+["trente","30","trahnt",""],
+["quarante","40","kah-RAHNT",""],
+["cinquante","50","sahn-KAHNT",""],
+["soixante","60","swah-SAHNT",""],
+["soixante-dix","70","swah-sahnt-DEES","Lit. sixty-ten"],
+["quatre-vingts","80","kah-truh-VAHN","Lit. four-twenties"],
+["quatre-vingt-dix","90","kah-truh-vahn-DEES","Lit. four-twenty-ten"],
+["cent","100","sahn",""],
+["mille","1,000","meel",""],
+["un million","1,000,000","meel-YOHN",""],
+["Quelle heure est-il ?","What time is it?","kel uhr et-EEL",""],
+["Il est deux heures","It is two o'clock","eel ay duh-ZUHR",""],
+["Il est midi","It is noon","eel ay mee-DEE",""],
+["Il est minuit","It is midnight","eel ay mee-NWEE",""],
+["et quart","quarter past","ay KAR","Il est deux heures et quart"],
+["et demie","half past","ay duh-MEE","Il est deux heures et demie"],
+["moins le quart","quarter to","mwahn luh KAR","Il est trois heures moins le quart"],
+["du matin","in the morning","doo mah-TAHN","10h du matin"],
+["de l'après-midi","in the afternoon","duh lahp-ray mee-DEE",""],
+["du soir","in the evening","doo SWAR",""],
+["lundi","Monday","luhn-DEE",""],
+["mardi","Tuesday","mar-DEE",""],
+["mercredi","Wednesday","mair-kruh-DEE",""],
+["jeudi","Thursday","zhuh-DEE",""],
+["vendredi","Friday","vahn-druh-DEE",""],
+["samedi","Saturday","sahm-DEE",""],
+["dimanche","Sunday","dee-MAHNSH",""],
+["janvier","January","zhahn-VYAY",""],
+["février","February","fay-VRYAY",""],
+["mars","March","marss",""],
+["avril","April","ah-VREEL",""],
+["mai","May","may",""],
+["juin","June","zhwahn",""],
+["juillet","July","zhwee-YAY",""],
+["août","August","oot / oo","The T is sometimes pronounced"],
+["septembre","September","sep-TAHM-bruh",""],
+["octobre","October","ok-TOH-bruh",""],
+["novembre","November","noh-VAHM-bruh",""],
+["décembre","December","day-SAHM-bruh",""],
+]},
+{id:'adjectives',name:'Adjectives & Descriptions',icon:'🎨',desc:'65 descriptive words',
+cards:[
+["grand(e)","big / tall","grahn / grahnd","Placed after noun: un homme grand"],
+["petit(e)","small / short","puh-TEE / puh-TEET",""],
+["gros(se)","large / fat","groh / gross",""],
+["mince","slim / thin","mahnss","Same m/f form"],
+["long(ue)","long","lohn / long",""],
+["court(e)","short (length)","koor / koort",""],
+["large","wide","larzh","Same m/f form"],
+["étroit(e)","narrow","ay-TRWAH",""],
+["nouveau / nouvelle","new","noo-VOH / noo-VEL","Placed before noun"],
+["vieux / vieille","old","vyuh / vyay","Placed before noun"],
+["jeune","young","zhuhn","Same m/f form"],
+["ancien(ne)","former / ancient","ahn-SYAHN","Before noun = former; after = ancient"],
+["propre","clean / own","propr","Before noun: ma propre chambre = my own room"],
+["sale","dirty","sal","Same m/f form"],
+["bon(ne)","good","bohn / bon","Placed before noun: un bon repas"],
+["mauvais(e)","bad","moh-VAY / moh-VEZ",""],
+["excellent(e)","excellent","ex-sel-AHN",""],
+["beau / belle","beautiful","boh / bel","Before noun: un beau jour"],
+["joli(e)","pretty","zhoh-LEE",""],
+["laid(e)","ugly","lay / led",""],
+["agréable","pleasant","ah-gray-AH-bluh","Same m/f form"],
+["facile","easy","fah-SEEL","Same m/f form"],
+["difficile","difficult","dee-fee-SEEL","Same m/f form"],
+["simple","simple","sahm-pluh","Same m/f form"],
+["compliqué(e)","complicated","kohm-plee-KAY",""],
+["rapide","fast","rah-PEED","Same m/f form"],
+["lent(e)","slow","lahn / lahnt",""],
+["heureux / heureuse","happy","uh-RUH / uh-RUHZ",""],
+["triste","sad","treest","Same m/f form"],
+["content(e)","pleased / happy","kohn-TAHN",""],
+["fâché(e)","angry","fah-SHAY",""],
+["inquiet / inquiète","worried","ahn-KYAY",""],
+["surpris(e)","surprised","soor-PREE",""],
+["sympa","nice / friendly","sahm-PAH","Invariable short form of sympathique"],
+["gentil(le)","kind","zhahn-TEE / zhahn-TEEY",""],
+["méchant(e)","mean / nasty","may-SHAHN",""],
+["timide","shy","tee-MEED","Same m/f form"],
+["courageux / courageuse","brave","koo-rah-ZHUH",""],
+["paresseux / paresseuse","lazy","pah-reh-SUH",""],
+["sérieux / sérieuse","serious","say-RYUH",""],
+["drôle","funny","drohl","Same m/f form"],
+["intelligent(e)","intelligent","ahn-tel-ee-ZHAHN",""],
+["chaud(e)","hot / warm","shoh / shohd",""],
+["froid(e)","cold","frwah / frwahd",""],
+["frais / fraîche","cool / fresh","fray / fresh",""],
+["doux / douce","soft / gentle","doo / dooss",""],
+["dur(e)","hard / tough","door",""],
+["rouge","red","roozh",""],
+["bleu(e)","blue","bluh",""],
+["vert(e)","green","vair / vairt",""],
+["jaune","yellow","zhohn","Same m/f form"],
+["orange","orange","oh-RAHNZH","Invariable colour"],
+["violet(te)","purple","vyoh-LAY",""],
+["rose","pink","rohz","Same m/f form. Also: rose (flower)"],
+["blanc(he)","white","blahn / blahnsh",""],
+["noir(e)","black","nwar",""],
+["gris(e)","gray","gree / greez",""],
+["brun(e)","brown","bruhn / broon",""],
+["même","same","mem","Can also mean 'even': même moi"],
+["autre","other / another","OH-truh","un autre café — another coffee"],
+["seul(e)","alone / only","suhl","Placed before noun: le seul problème"],
+["certain(e)","certain / sure","sair-TAHN",""],
+["possible","possible","poh-SEE-bluh","Same m/f form"],
+["important(e)","important","ahm-por-TAHN",""],
+]},
+{id:'grammar',name:'Grammar & Connectors',icon:'🔗',desc:'55 grammar patterns',
+cards:[
+["Qu'est-ce que c'est ?","What is it?","kes-kuh say","Most common way to ask 'what is this?'"],
+["Qui est-ce ?","Who is it?","kee ess",""],
+["Où ?","Where?","oo",""],
+["Quand ?","When?","kahn",""],
+["Pourquoi ?","Why?","poor-KWAH",""],
+["Comment ?","How?","koh-MAHN",""],
+["Combien ?","How many / much?","kohm-BYAHN",""],
+["Quel / Quelle ?","Which? / What? (adj)","kel","Quel âge as-tu? — How old are you?"],
+["Est-ce que… ?","Is it that…? (question)","es-kuh","Turns statement into question"],
+["ne… pas","not","nuh…pah","Je ne mange pas — I don't eat"],
+["ne… jamais","never","nuh…zhah-MAY","Je ne mange jamais de viande"],
+["ne… plus","no longer","nuh…ploo","Je ne travaille plus là"],
+["ne… rien","nothing","nuh…ryahn","Je ne sais rien"],
+["ne… personne","nobody","nuh…pair-SON","Je ne connais personne ici"],
+["ne… que","only","nuh…kuh","Je n'ai que dix euros"],
+["Il y a…","There is / there are…","eel-ee-AH","Il y a un problème"],
+["Il n'y a pas de…","There is no…","eel-nyah-pah-duh","Il n'y a pas de pain"],
+["Il faut…","One must… / It is necessary…","eel FOH","Il faut partir maintenant"],
+["C'est…","It is…","say","C'est bon — It's good"],
+["Ce n'est pas…","It is not…","suh nay pah","Ce n'est pas vrai"],
+["Je suis en train de…","I am currently doing…","ahn-trahn-duh","Je suis en train de manger"],
+["Je viens de…","I just did…","zhuh vyahn duh","Je viens de manger — I just ate"],
+["Je vais + infinitive","I'm going to…","zhuh VAY","Near future: Je vais partir"],
+["depuis + time","for / since (ongoing)","duh-PWEE","J'habite ici depuis 2 ans"],
+["pendant + time","during / for (completed)","pahn-DAHN","J'ai travaillé pendant 3 heures"],
+["avant de + infinitive","before doing","ah-VAHN duh","avant de partir — before leaving"],
+["après avoir + past part.","after having done","ah-PRAY ah-VWAR","après avoir mangé — after eating"],
+["d'abord","first of all","dah-BOR",""],
+["ensuite","then / next","ahn-SWEET",""],
+["enfin","finally","ahn-FAHN",""],
+["par exemple","for example","par ex-AHM-pluh",""],
+["c'est-à-dire","that is to say","say-tah-DEER",""],
+["en effet","indeed / in fact","ahn-neh-FAY",""],
+["pourtant","however / yet","poor-TAHN",""],
+["néanmoins","nevertheless","nay-ahn-MWAHN","Formal"],
+["si… alors","if… then","see… ah-LOR","Si tu viens, alors on mange"],
+["plus… plus","the more… the more","ploo…ploo","Plus il parle, plus je comprends"],
+["plus grand(e) que","bigger than","ploo grahn kuh","Comparison of superiority"],
+["moins grand(e) que","smaller than","mwahn grahn kuh","Comparison of inferiority"],
+["aussi grand(e) que","as big as","oh-see grahn kuh","Comparison of equality"],
+["le / la plus grand(e)","the biggest","luh ploo grahn","Superlative"],
+["mieux","better (adverb)","myuh","Il parle mieux — He speaks better"],
+["meilleur(e)","better (adjective)","may-YUHR","un meilleur repas — a better meal"],
+["pire","worse","peer","c'est pire — it's worse"],
+["Le présent","Present tense","","je mange — I eat / I am eating"],
+["Le passé composé","Past tense (completed)","pah-say kohm-poh-ZAY","j'ai mangé — I ate / I have eaten"],
+["L'imparfait","Past tense (ongoing/habitual)","ahm-par-FAY","je mangeais — I was eating / I used to eat"],
+["Le futur proche","Near future","foo-TOOR prosh","je vais manger — I'm going to eat"],
+["Le conditionnel","Conditional","kohn-dee-syoh-NEL","je mangerais — I would eat"],
+["accord de l'adjectif","adjective agreement","","Adjectives match gender & number of noun"],
+["le genre","gender (of nouns)","zhahn-ruh","Every French noun is masculine or feminine"],
+["le pluriel","plural","ploo-RYEL","Most nouns add -s: livres, tables"],
+["les verbes réfléchis","reflexive verbs","ray-flay-SHEE","se laver, s'appeler, se lever"],
+["le subjonctif","subjunctive mood","soob-zhohnk-TEEF","After vouloir que, il faut que…"],
+]},
+{id:'sentences',name:'Basic Sentences',icon:'✏️',desc:'60 full sentences',
+cards:[
+["Je travaille dans un bureau","I work in an office","zhuh trah-VYE dahn zuhn boo-ROH","Present tense"],
+["Elle habite à Montréal","She lives in Montreal","el ah-BEET ah mohn-ray-AL","Habiter = regular -er"],
+["Nous mangeons à huit heures","We eat at eight o'clock","noo mahn-ZHOHN ah weet uhr","nous mangeons (not mangerons!)"],
+["Il parle très bien français","He speaks French very well","eel PARL tray byahn","Adverb placement after verb"],
+["Tu viens avec moi ?","Are you coming with me?","too vyahn ah-vek mwah","Informal question (intonation only)"],
+["Ils ont deux enfants","They have two children","eel-zohn duh-zahn-FAHN","ont = have (avoir)"],
+["Je ne sais pas où il est","I don't know where he is","","Embedded question"],
+["Vous voulez du café ?","Would you like some coffee?","voo voo-LAY doo kah-FAY","du = partitive article"],
+["J'apprends le français depuis six mois","I've been learning French for 6 months","","depuis + present (ongoing action)"],
+["J'ai beaucoup de travail","I have a lot of work","zhay boh-KOO duh trah-VAYE",""],
+["J'ai mangé ce matin","I ate this morning","zhay mahn-ZHAY suh mah-TAHN","Passé composé"],
+["Elle est arrivée hier soir","She arrived yesterday evening","","être verb in passé composé → arrivée agrees"],
+["Nous avons vu un film","We saw a movie","noo-zah-VOHN voo","vu = past participle of voir"],
+["Il a pris le train","He took the train","eel ah PREE","pris = past participle of prendre"],
+["Je suis allé(e) au supermarché","I went to the supermarket","","aller uses être in passé composé"],
+["Ils ont travaillé toute la journée","They worked all day","","toute la journée = all day long"],
+["Quand j'étais enfant, j'aimais lire","When I was a child, I liked to read","","Imparfait for past habits"],
+["Il faisait froid ce matin-là","It was cold that morning","eel fuh-ZAY frwah","Imparfait for description"],
+["Nous habitions à Toronto","We used to live in Toronto","","Imparfait: habitions"],
+["Je vais appeler demain","I'm going to call tomorrow","","Futur proche: aller + inf"],
+["Elle va commencer un nouveau travail","She's going to start a new job","",""],
+["Il va falloir changer de plan","We're going to have to change plans","","il va falloir = impersonal near future"],
+["Je voudrais un café, s'il vous plaît","I would like a coffee, please","zhuh voo-DRAY","Conditionnel — polite request"],
+["Tu pourrais m'aider ?","Could you help me?","too poo-RAY","Conditionnel of pouvoir"],
+["J'aimerais visiter Paris","I would like to visit Paris","zhay-muh-RAY","Conditionnel of aimer"],
+["Est-ce que vous parlez français ?","Do you speak French?","es-kuh voo par-LAY","Est-ce que = polite question marker"],
+["Depuis combien de temps êtes-vous ici ?","How long have you been here?","","depuis + present for ongoing duration"],
+["Qu'est-ce que vous faites dans la vie ?","What do you do for a living?","","Lit. 'what do you do in life?'"],
+["À quelle heure commence la réunion ?","What time does the meeting start?","","Inversion question"],
+["Je cherche la station de métro","I'm looking for the metro station","","chercher = regular -er"],
+["C'est la première fois que je viens ici","It's the first time I've come here","","première fois que + present"],
+["Mon niveau de français s'améliore","My French level is improving","","s'améliorer = reflexive"],
+["J'ai besoin de pratiquer plus souvent","I need to practise more often","","avoir besoin de + inf"],
+["Je trouve ça très intéressant","I find that very interesting","","trouver + adj"],
+["Il me semble que vous avez raison","It seems to me that you are right","","il me semble que + indicative"],
+["Je vous remercie de votre aide","Thank you for your help","","Formal thank you"],
+["Pourriez-vous répéter plus lentement ?","Could you repeat more slowly?","poo-RYAY voo","Conditionnel of pouvoir — formal"],
+["Je ne suis pas sûr(e) de comprendre","I'm not sure I understand","","pas sûr de + inf"],
+["Permettez-moi de me présenter","Allow me to introduce myself","pair-meh-TAY mwah","Formal self-introduction"],
+["C'est très aimable de votre part","That is very kind of you","","Formal compliment"],
+["Qu'est-ce qui s'est passé ?","What happened?","kes-kee say pah-SAY",""],
+["Je n'en sais rien","I have no idea about it","","en = pronoun replacing the thing"],
+["Il faut que je parte","I have to leave","eel foh kuh zhuh PART","Subjunctive after il faut que"],
+["Je suis content(e) d'être ici","I'm happy to be here","","content(e) de + inf"],
+["On y va ?","Shall we go?","ohn ee VAH","y = there. Very common expression"],
+["Ça dépend","It depends","sah day-PAHN","Common filler phrase"],
+["Je m'en occupe","I'll take care of it","zhuh mahn oh-KOOP","en = of it, me = reflexive"],
+["Il s'agit de…","It's about… / It concerns…","eel sah-ZHEE duh","Formal/written French"],
+["À votre santé !","Cheers! / To your health!","ah voh-truh sahn-TAY","When toasting"],
+["Ça me fait plaisir","It pleases me / I'm glad","sah muh fay play-ZEER",""],
+["C'est hors de question","It's out of the question","say or duh kes-TYOHN",""],
+["Je tiens à vous remercier","I want to thank you","zhuh tyahn ah","Formal — tenir à = to be keen to"],
+["N'hésitez pas à me contacter","Don't hesitate to contact me","nay-zee-TAY pah","Professional phrase"],
+["Veuillez trouver ci-joint…","Please find attached…","vuh-YAY","Written/email formal French"],
+["Suite à notre conversation…","Following our conversation…","","Business/formal French"],
+["Dans le cadre de…","In the context of…","dahn luh kah-druh duh","Formal connector"],
+["En ce qui concerne…","As regards… / Concerning…","ahn suh kee kohn-SAIRN","Formal connector"],
+]},
+{id:'canada',name:'Canadian Life & PR',icon:'🍁',desc:'50 cards for life in Canada',
+cards:[
+["la résidence permanente","permanent residence","ray-zee-DAHNSS pair-mah-NAHNT","RP — the goal!"],
+["le permis de travail","work permit","pair-MEE duh trah-VAYE",""],
+["le permis d'études","study permit","pair-MEE day-TOOD",""],
+["la citoyenneté canadienne","Canadian citizenship","see-twah-yen-TAY","After 3 years as PR"],
+["une demande d'immigration","an immigration application","duh-MAHND",""],
+["un formulaire","a form","for-moo-LAIR",""],
+["une pièce d'identité","an ID document","pyess dee-dahn-tee-TAY",""],
+["un passeport","a passport","pahss-POR",""],
+["un visa","a visa","vee-ZAH",""],
+["une vérification des antécédents","a background check","vay-ree-fee-kah-SYOHN",""],
+["une preuve de résidence","proof of residence","pruhv duh ray-zee-DAHNSS",""],
+["l'Entrée express","Express Entry","ahn-TRAY ex-PRESS","Federal skilled worker program"],
+["le score de classement global","Comprehensive Ranking System (CRS)","skore duh klahs-MAHN",""],
+["un point de CRS","a CRS point","","Higher = better chances"],
+["l'invitation à présenter une demande","Invitation to Apply (ITA)","","You need this to apply"],
+["francophone","French-speaking","frahn-koh-FOHN",""],
+["anglophone","English-speaking","ahn-gloh-FOHN",""],
+["bilingue","bilingual","bee-LAHNG",""],
+["le bilinguisme","bilingualism","bee-lahng-GWEES-muh","Core to Canadian identity"],
+["le français québécois","Quebec French","frahn-SAY kay-bay-KWAH","Has different pronunciation"],
+["le TEF Canada","Test d'Évaluation de Français","tay-uh-ef","One of two accepted French tests"],
+["le TCF Canada","Test de Connaissance du Français","tay-say-ef","The other accepted test"],
+["le niveau CLB","Canadian Language Benchmark","see-el-bay","CLB 7 = minimum for most programs"],
+["CLB 7","Intermediate French level","","Target for Express Entry"],
+["CLB 9","Upper-intermediate French","","Worth significantly more CRS points"],
+["un employeur","an employer","ahm-plwah-YUHR",""],
+["un contrat de travail","an employment contract","kohn-TRAH",""],
+["le salaire","salary","sah-LAIR",""],
+["les avantages sociaux","employee benefits","ah-vahn-TAZH soh-SYOH","Health, dental, etc."],
+["le numéro d'assurance sociale (NAS)","Social Insurance Number (SIN)","noo-may-ROH dah-soo-RAHNSS","Need this to work"],
+["la carte d'assurance maladie","health card","kart dah-soo-RAHNSS mah-lah-DEE","Provincial health coverage"],
+["l'impôt sur le revenu","income tax","ahm-POH soor luh ruh-vuh-NOO",""],
+["la déclaration de revenus","tax return","day-klah-rah-SYOHN","Filed in April"],
+["un loyer","rent","lwah-YAY",""],
+["un propriétaire","a landlord","pro-pryay-TAIR",""],
+["un locataire","a tenant","loh-kah-TAIR",""],
+["un bail","a lease","bye",""],
+["les charges","utilities","sharzh","Électricité, eau, chauffage"],
+["une banque","a bank","bahnk",""],
+["un compte bancaire","a bank account","kohnt bahn-KAIR",""],
+["les transports en commun","public transportation","trahn-SPOR ahn koh-MUHN",""],
+["une carte OPUS","OPUS transit card (Montreal)","oh-POOSS","Montreal transit card"],
+["la SAQ","liquor store (Quebec)","ess-ah-KOO","Société des alcools du Québec"],
+["le REER","RRSP (retirement savings)","ray-air","Régime enregistré d'épargne-retraite"],
+["le CELI","TFSA (tax-free savings)","say-lee","Compte d'épargne libre d'impôt"],
+["Je suis résident(e) permanent(e)","I am a permanent resident","",""],
+["Je cherche un emploi","I am looking for a job","zhuh shairsh uhn ahm-PLWAH",""],
+["Je dois renouveler mon permis","I need to renew my permit","doh ruh-noo-vuh-LAY",""],
+["Mon dossier est en cours de traitement","My file is being processed","doh-SYAY",""],
+["Je parle français au niveau CLB 8","I speak French at CLB 8 level","","Useful in interviews"],
+]}
+];
+
+/* ══════════════════════════════════════
+   CONSTANTS & STATE
+══════════════════════════════════════ */
+const STORE  = 'fc_v7';
+const DAY_MS = 86400000;
+const D_EASE = 2.5;
+const M_EASE = 1.3;
+
+let S = {
+  cards:         {},
+  streak:        0,
+  lastStudyDate: null,
+  history:       {},   // date string → count reviewed
+  settings:      { newPerDay:10, frontLang:'fr', mode:'flip', showPhonetic:true },
+  activeCat:     null,
+  session:       [],
+  idx:           0,
+  revealed:      false,
+  typingChecked: false,
+  sStats:        { reviewed:0, missed:0, typed:0, typeCorrect:0 }
+};
+
+/* ══════════════════════════════════════
+   PERSISTENCE
+══════════════════════════════════════ */
+function save(){localStorage.setItem(STORE,JSON.stringify({cards:S.cards,streak:S.streak,lastStudyDate:S.lastStudyDate,history:S.history,settings:S.settings}));}
+function load(){try{const d=JSON.parse(localStorage.getItem(STORE)||'null');if(d&&d.cards){Object.assign(S,d);return true;}}catch(_){}return false;}
+function setSetting(k,v){S.settings[k]=v;save();
+  if(k==='mode')updateModeToggle();
+  if(k==='showPhonetic'&&S.session.length)renderCard();
+}
+
+/* ══════════════════════════════════════
+   CARD MANAGEMENT
+══════════════════════════════════════ */
+function ensureCards(){
+  CATEGORIES.forEach(cat=>{
+    cat.cards.forEach(([fr,en,ph,note],i)=>{
+      const id=cat.id+'_'+i;
+      if(!S.cards[id])S.cards[id]={id,catId:cat.id,fr,en,ph:ph||'',note:note||'',interval:0,ease:D_EASE,due:0,reviews:0};
+      else{// update text but keep progress
+        S.cards[id].fr=fr;S.cards[id].en=en;S.cards[id].ph=ph||'';S.cards[id].note=note||'';
+      }
+    });
+  });
+}
+function getCards(catId){return Object.values(S.cards).filter(c=>c.catId===catId);}
+
+/* ══════════════════════════════════════
+   SM-2
+══════════════════════════════════════ */
+function calcNext(card,got){
+  if(!got)return 1;
+  const r=card.reviews||0;
+  if(r===0)return 4;
+  if(r===1)return 10;
+  return Math.max(4,Math.round((card.interval||4)*(card.ease||D_EASE)));
+}
+function applyReview(card,got){
+  card.ease=Math.max(M_EASE,(card.ease||D_EASE)+(got?.1:-.2));
+  card.interval=calcNext(card,got);
+  card.due=Date.now()+card.interval*DAY_MS;
+  card.reviews=(card.reviews||0)+1;
+  return card;
+}
+
+/* ══════════════════════════════════════
+   DATE / HISTORY
+══════════════════════════════════════ */
+function todayStr(){return new Date().toISOString().slice(0,10);}
+function fmtDate(days){return new Date(Date.now()+days*DAY_MS).toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'});}
+function itvLabel(days){
+  if(days<=1)return'Tomorrow';
+  if(days<7)return'In '+days+' days';
+  if(days<14)return'In 1 week';
+  if(days<30)return'In '+Math.round(days/7)+' weeks';
+  return'In '+Math.round(days/30)+' months';
+}
+function recordHistory(){
+  const t=todayStr();
+  S.history[t]=(S.history[t]||0)+1;
+}
+
+/* ══════════════════════════════════════
+   SESSION
+══════════════════════════════════════ */
+function buildSession(catId){
+  const now=Date.now(),today=todayStr();
+  if(S.lastStudyDate){const gap=Math.round((new Date(today)-new Date(S.lastStudyDate))/DAY_MS);if(gap>1)S.streak=0;}
+  const pool=getCards(catId);
+  const due=pool.filter(c=>c.reviews>0&&c.due<=now).sort(()=>Math.random()-.5);
+  const fresh=pool.filter(c=>c.reviews===0).slice(0,S.settings.newPerDay);
+  S.session=[...due,...fresh];S.idx=0;
+  S.sStats={reviewed:0,missed:0,typed:0,typeCorrect:0};
+}
+
+/* ══════════════════════════════════════
+   FONT SIZE
+══════════════════════════════════════ */
+function fsz(t){const n=(t||'').length;if(n<=12)return'sz-xl';if(n<=22)return'sz-lg';if(n<=38)return'sz-md';if(n<=55)return'sz-sm';return'sz-xs';}
+function asz(t){const n=(t||'').length;if(n<=18)return'sz-lg';if(n<=36)return'sz-md';return'sz-sm';}
+
+/* ══════════════════════════════════════
+   HOME
+══════════════════════════════════════ */
+function renderHome(){
+  const now=Date.now();
+  let totalDue=0;
+
+  // Streak
+  document.getElementById('streak-val').textContent=S.streak+'🔥';
+  const today=todayStr();
+  const studiedToday=S.history[today]>0;
+  document.getElementById('streak-label-main').textContent=S.streak>0?'Day streak':'Start your streak';
+  document.getElementById('streak-label-sub').textContent=studiedToday?'Great — you studied today!':'Study today to keep your streak going';
+
+  const list=document.getElementById('cat-list');
+  list.innerHTML='';
+  CATEGORIES.forEach(cat=>{
+    const cards=getCards(cat.id);
+    const due=cards.filter(c=>c.reviews>0&&c.due<=now).length;
+    const newCt=cards.filter(c=>c.reviews===0).length;
+    const learned=cards.filter(c=>c.reviews>0).length;
+    const pct=Math.round(learned/cards.length*100);
+    totalDue+=due;
+    let badge;
+    if(due>0)badge=`<span class="badge b-due">${due} due</span>`;
+    else if(newCt>0)badge=`<span class="badge b-new">${Math.min(newCt,S.settings.newPerDay)} new</span>`;
+    else badge=`<span class="badge b-done">All done</span>`;
+    const item=document.createElement('div');
+    item.className='cat-card';
+    item.innerHTML=`
+      <div class="cat-icon">${cat.icon}</div>
+      <div class="cat-body">
+        <div class="cat-name">${cat.name}</div>
+        <div class="cat-meta">${cat.desc} · ${learned}/${cards.length} learned</div>
+        <div class="cat-bar"><div class="cat-bar-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div class="cat-right">${badge}</div>
+    `;
+    item.addEventListener('click',()=>startStudy(cat.id));
+    list.appendChild(item);
+  });
+
+  const sub=document.getElementById('home-sub');
+  sub.textContent=totalDue>0?`You have ${totalDue} card${totalDue!==1?'s':''} due for review.`:'Pick a category to begin. Work through them in order.';
+}
+
+/* ══════════════════════════════════════
+   STUDY FLOW
+══════════════════════════════════════ */
+function startStudy(catId){
+  S.activeCat=catId;
+  buildSession(catId);
+  const cat=CATEGORIES.find(c=>c.id===catId);
+  document.getElementById('tb-cat').textContent=cat?(cat.icon+' '+cat.name):catId;
+  updateModeToggle();
+  if(!S.session.length){showDone();return;}
+  showScreen('s-study');
+  renderCard();
+}
+
+function updateModeToggle(){
+  const btn=document.getElementById('mode-toggle');
+  if(!btn)return;
+  const isType=S.settings.mode==='type';
+  btn.textContent=isType?'🃏 Flip':'⌨️ Type';
+}
+function toggleMode(){
+  S.settings.mode=S.settings.mode==='type'?'flip':'type';
+  save();updateModeToggle();
+  if(S.session.length)renderCard();
+}
+
+function renderCard(){
+  const card=S.session[S.idx];
+  if(!card){showDone();return;}
+  S.revealed=false;S.typingChecked=false;
+
+  const frFirst=S.settings.frontLang==='fr';
+  const frontText=frFirst?card.fr:card.en;
+  const backText=frFirst?card.en:card.fr;
+  const frontPh=frFirst?card.ph:'';
+  const frontNote=card.note||'';
+
+  // Front
+  document.getElementById('c-lang').textContent=frFirst?'FRENCH':'ENGLISH';
+  const cw=document.getElementById('c-word');
+  cw.textContent=frontText;cw.className='c-word '+fsz(frontText);
+
+  // Phonetic
+  const ph=document.getElementById('c-phonetic');
+  if(S.settings.showPhonetic&&frontPh&&frFirst){
+    ph.textContent='[ '+frontPh+' ]';ph.style.display='';
+  }else{ph.textContent='';ph.style.display='none';}
+
+  // Grammar note
+  const cn=document.getElementById('c-note');
+  if(frontNote&&frFirst){cn.textContent=frontNote;cn.style.display='';}
+  else{cn.textContent='';cn.style.display='none';}
+
+  // Answer — IMPORTANT: clear text immediately to prevent flash
+  document.getElementById('a-lang').textContent=frFirst?'ENGLISH':'FRENCH';
+  document.getElementById('a-word').textContent='';  // Clear first — prevents flash bug
+  document.getElementById('a-tip').textContent='';
+
+  // Interval previews
+  const dG=calcNext(card,true),dM=calcNext(card,false);
+  document.getElementById('rn-g').textContent=itvLabel(dG);
+  document.getElementById('rd-g').textContent=fmtDate(dG);
+  document.getElementById('rn-m').textContent=itvLabel(dM);
+  document.getElementById('rd-m').textContent=fmtDate(dM);
+
+  // Reset all reveal-state visuals
+  document.getElementById('ans-area').classList.remove('vis');
+  document.getElementById('divider').style.opacity='0';
+  document.getElementById('rrow').classList.remove('vis');
+  document.getElementById('sw-tip').classList.remove('vis');
+  document.getElementById('ov-m').style.opacity='0';
+  document.getElementById('ov-g').style.opacity='0';
+  document.getElementById('sh-l').style.opacity='0';
+  document.getElementById('sh-r').style.opacity='0';
+  resetCardPos();
+
+  // Mode: flip vs type
+  const isType=S.settings.mode==='type';
+  const showBtn=document.getElementById('show-btn');
+  const hintBtn=document.getElementById('hint-btn');
+  const typeArea=document.getElementById('type-area');
+
+  if(isType){
+    showBtn.classList.add('gone');
+    hintBtn.classList.add('gone');
+    typeArea.classList.add('vis');
+    const inp=document.getElementById('type-input');
+    inp.value='';inp.className='type-input';inp.disabled=false;
+    document.getElementById('type-feedback').className='type-feedback';
+    document.getElementById('type-feedback').textContent='';
+    // Auto-focus after a tiny delay so transition is done
+    setTimeout(()=>{ if(S.settings.mode==='type')inp.focus(); },150);
+  }else{
+    showBtn.classList.remove('gone');
+    hintBtn.classList.remove('gone');
+    typeArea.classList.remove('vis');
+  }
+
+  // Progress
+  document.getElementById('prog-b').style.width=Math.round(S.idx/S.session.length*100)+'%';
+
+  // Queue pills
+  const rem=S.session.slice(S.idx);
+  const nCt=rem.filter(c=>c.reviews===0&&!c._again).length;
+  const dCt=rem.filter(c=>c.reviews>0&&!c._again).length;
+  const aCt=rem.filter(c=>c._again).length;
+  const qr=document.getElementById('qrow');qr.innerHTML='';
+  if(nCt)qr.innerHTML+=`<span class="qp qp-new">${nCt} new</span>`;
+  if(dCt)qr.innerHTML+=`<span class="qp qp-rev">${dCt} review</span>`;
+  if(aCt)qr.innerHTML+=`<span class="qp qp-ag">${aCt} again</span>`;
+}
+
+function showHint(){
+  const card=S.session[S.idx];if(!card)return;
+  const frFirst=S.settings.frontLang==='fr';
+  const backText=frFirst?card.en:card.fr;
+  const hint=backText.charAt(0)+'___';
+  document.getElementById('show-btn').textContent=`${hint}  —  Show Answer`;
+  document.getElementById('hint-btn').classList.add('gone');
+}
+
+function reveal(){
+  if(S.revealed)return;
+  S.revealed=true;
+
+  // Now set the answer text (AFTER reveal is triggered, so no premature flash)
+  const card=S.session[S.idx];
+  const frFirst=S.settings.frontLang==='fr';
+  const backText=frFirst?card.en:card.fr;
+  document.getElementById('a-word').textContent=backText;
+  document.getElementById('a-word').className='a-word '+asz(backText);
+
+  document.getElementById('divider').style.opacity='1';
+  document.getElementById('ans-area').classList.add('vis');
+  document.getElementById('show-btn').classList.add('gone');
+  document.getElementById('hint-btn').classList.add('gone');
+  document.getElementById('rrow').classList.add('vis');
+  document.getElementById('sw-tip').classList.add('vis');
+}
+
+/* ══════════════════════════════════════
+   TYPING MODE
+══════════════════════════════════════ */
+function normalise(s){return(s||'').toLowerCase().trim().replace(/[éèêë]/g,'e').replace(/[àâä]/g,'a').replace(/[îï]/g,'i').replace(/[ôö]/g,'o').replace(/[ùûü]/g,'u').replace(/[ç]/g,'c').replace(/[^a-z0-9\s\/\-\']/g,'').replace(/\s+/g,' ').trim();}
+
+function checkTyping(){
+  if(S.typingChecked)return;
+  const card=S.session[S.idx];if(!card)return;
+  const frFirst=S.settings.frontLang==='fr';
+  const backText=frFirst?card.en:card.fr;
+  const inp=document.getElementById('type-input');
+  const answer=inp.value;
+  const correct=normalise(answer)===normalise(backText);
+  S.typingChecked=true;
+  inp.disabled=true;
+  inp.className='type-input '+(correct?'correct':'wrong');
+  const fb=document.getElementById('type-feedback');
+  fb.className='type-feedback show '+(correct?'tf-correct':'tf-wrong');
+  fb.textContent=correct?'✓ Correct!':'✕ The answer is: '+backText;
+  S.sStats.typed++;
+  if(correct)S.sStats.typeCorrect++;
+  // Show rating buttons after typing check
+  document.getElementById('a-word').textContent=backText;
+  document.getElementById('a-word').className='a-word '+asz(backText);
+  document.getElementById('rrow').classList.add('vis');
+  S.revealed=true;
+}
+
+/* ══════════════════════════════════════
+   RATING — BUG FIX: clear answer immediately
+══════════════════════════════════════ */
+function rate(got){
+  if(!S.revealed){reveal();return;}
+
+  // ── FLASH BUG FIX: blank the answer text immediately ──
+  // This runs BEFORE the next card renders, so there's no
+  // frame where the next card's answer is visible.
+  document.getElementById('a-word').textContent='';
+  document.getElementById('a-tip').textContent='';
+  document.getElementById('ans-area').classList.remove('vis');
+  document.getElementById('divider').style.opacity='0';
+  document.getElementById('rrow').classList.remove('vis');
+  document.getElementById('sw-tip').classList.remove('vis');
+  document.getElementById('c-phonetic').textContent='';
+  document.getElementById('c-note').textContent='';
+  document.getElementById('c-note').style.display='none';
+  // ── end flash fix ──
+
+  const card=S.session[S.idx];
+  applyReview(card,got);
+  S.cards[card.id]={...card};
+
+  S.sStats.reviewed++;
+  recordHistory();
+  if(!got){
+    S.sStats.missed++;
+    const alreadyQ=S.session.slice(S.idx+1).filter(c=>c.id===card.id).length;
+    if(alreadyQ<2){const clone={...S.cards[card.id],_again:true};S.session.splice(Math.min(S.idx+4,S.session.length),0,clone);}
+  }
+
+  const today=todayStr();
+  if(S.lastStudyDate!==today){S.streak++;S.lastStudyDate=today;}
+  save();
+
+  showToast((got?'✓ Got it':'✕ Missed it')+'  ·  '+itvLabel(card.interval));
+  S.idx++;
+  if(S.idx>=S.session.length)setTimeout(showDone,350);
+  else setTimeout(renderCard,280);
+}
+
+/* ══════════════════════════════════════
+   DONE SCREEN
+══════════════════════════════════════ */
+function showDone(){
+  const missed=S.sStats.missed;
+  const rev=S.sStats.reviewed;
+  const emoji=missed===0&&rev>0?'🌟':'✓';
+  document.getElementById('done-icon').textContent=emoji;
+  document.getElementById('done-title').textContent=missed===0&&rev>0?'Perfect session!':'Session done!';
+  document.getElementById('d-rev').textContent=rev;
+  document.getElementById('d-str').textContent=S.streak+'🔥';
+  document.getElementById('d-tot').textContent=Object.values(S.cards).filter(c=>c.reviews>0).length;
+  document.getElementById('d-sub').textContent=
+    rev===0?'Nothing due right now. Come back tomorrow or try a new category.':
+    missed>0?`You missed ${missed} word${missed!==1?'s':''} — they'll be back tomorrow.`:
+    'All words scheduled perfectly. See you next time!';
+
+  // Typing stats
+  if(S.sStats.typed>0){
+    document.getElementById('d-sub').textContent+=` (Typing accuracy: ${Math.round(S.sStats.typeCorrect/S.sStats.typed*100)}%)`;
+  }
+
+  // Mini chart
+  buildMiniChart('done-chart');
+
+  // Schedule breakdown
+  const now=Date.now();
+  const reviewed=Object.values(S.cards).filter(c=>c.reviews>0);
+  const bkts=[{l:'Tomorrow',max:1},{l:'In 2–3 days',max:3},{l:'This week',max:7},{l:'Later',max:Infinity}].map(b=>({...b,n:0}));
+  reviewed.forEach(c=>{const d=Math.round((c.due-now)/DAY_MS);for(const b of bkts){if(d<=b.max){b.n++;break;}}});
+  document.getElementById('sched-rows').innerHTML=bkts.filter(b=>b.n>0).map(b=>`<div class="sched-row"><span class="sched-k">${b.l}</span><span class="sched-v">${b.n} cards</span></div>`).join('')||'<div class="sched-row"><span class="sched-k" style="color:var(--t3)">No reviews scheduled yet</span></div>';
+
+  showScreen('s-done');
+}
+
+/* ══════════════════════════════════════
+   PROGRESS CHART
+══════════════════════════════════════ */
+function buildMiniChart(containerId){
+  const el=document.getElementById(containerId);if(!el)return;
+  const days=14;const today=todayStr();
+  const labels=[],counts=[];
+  let maxVal=1;
+  for(let i=days-1;i>=0;i--){
+    const d=new Date();d.setDate(d.getDate()-i);
+    const ds=d.toISOString().slice(0,10);
+    const cnt=S.history[ds]||0;
+    labels.push(d.toLocaleDateString('en-CA',{weekday:'short'}).slice(0,1));
+    counts.push(cnt);
+    if(cnt>maxVal)maxVal=cnt;
+  }
+  const total=counts.reduce((a,b)=>a+b,0);
+  el.innerHTML=`
+    <div class="chart-hd">
+      <span class="chart-title">Reviews — last 14 days</span>
+      <span class="chart-total">${total} total</span>
+    </div>
+    <div class="chart-area">
+      <div class="chart-bars">
+        ${counts.map((c,i)=>{
+          const h=maxVal>0?Math.max(4,Math.round(c/maxVal*52)):4;
+          const isToday=i===counts.length-1;
+          return`<div class="chart-bar-wrap">
+            <div class="chart-bar${isToday?' today':''}" style="height:${h}px" title="${c} reviews"></div>
+            <div class="chart-day">${labels[i]}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+}
+
+function openProgress(){
+  buildMiniChart('prog-chart-box');
+  const now=Date.now();
+  const pList=document.getElementById('prog-cat-list');pList.innerHTML='';
+  CATEGORIES.forEach(cat=>{
+    const cards=getCards(cat.id);
+    const learned=cards.filter(c=>c.reviews>0).length;
+    const due=cards.filter(c=>c.reviews>0&&c.due<=now).length;
+    const pct=Math.round(learned/cards.length*100);
+    const item=document.createElement('div');
+    item.style.cssText='background:var(--sf);border:1px solid var(--br);border-radius:var(--rs);padding:12px 14px;';
+    item.innerHTML=`
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <span style="font-size:14px;font-weight:500">${cat.icon} ${cat.name}</span>
+        <span style="font-size:12px;color:var(--t3)">${learned}/${cards.length}</span>
+      </div>
+      <div style="height:4px;background:var(--s3);border-radius:4px;overflow:hidden">
+        <div style="height:100%;width:${pct}%;background:var(--nv);border-radius:4px"></div>
+      </div>
+      ${due>0?`<div style="font-size:11px;color:var(--gn);margin-top:5px">${due} due for review</div>`:''}`;
+    pList.appendChild(item);
+  });
+  showScreen('s-progress');
+}
+
+/* ══════════════════════════════════════
+   STATS PANEL
+══════════════════════════════════════ */
+function openPanel(){
+  const now=Date.now();const cards=Object.values(S.cards);
+  document.getElementById('sp-tot').textContent=cards.length;
+  document.getElementById('sp-lrn').textContent=cards.filter(c=>c.reviews>0).length;
+  document.getElementById('sp-due').textContent=cards.filter(c=>c.reviews>0&&c.due<=now).length;
+  document.getElementById('sp-str').textContent=S.streak+'🔥';
+  document.getElementById('set-npd').value=S.settings.newPerDay;
+  document.getElementById('set-lang').value=S.settings.frontLang;
+  document.getElementById('set-mode').value=S.settings.mode;
+  document.getElementById('set-phonetic').value=String(S.settings.showPhonetic!==false);
+  document.getElementById('panel').classList.add('open');
+}
+function closePanel(){document.getElementById('panel').classList.remove('open');}
+function closePanelBg(e){if(e.target.id==='panel')closePanel();}
+function resetAll(){
+  if(!confirm('Reset ALL progress? Cannot be undone.'))return;
+  Object.values(S.cards).forEach(c=>{c.interval=0;c.ease=D_EASE;c.due=0;c.reviews=0;delete c._again;});
+  S.streak=0;S.lastStudyDate=null;S.history={};
+  save();closePanel();goHome();
+}
+
+/* ══════════════════════════════════════
+   TOAST / SCREEN / HOME
+══════════════════════════════════════ */
+function showToast(msg,ms){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),ms||2000);}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function goHome(){save();renderHome();showScreen('s-home');}
+
+/* ══════════════════════════════════════
+   SWIPE
+══════════════════════════════════════ */
+let dragX=null,isDrag=false;
+function resetCardPos(){const c=document.getElementById('card');c.style.transition='transform .3s cubic-bezier(.4,0,.2,1)';c.style.transform='';c.style.opacity='1';setTimeout(()=>{c.style.transition='';},320);}
+function clrOvs(){['ov-g','ov-m','sh-l','sh-r'].forEach(id=>{document.getElementById(id).style.opacity='0';});}
+function initSwipe(){
+  const card=document.getElementById('card');
+  const oS=x=>{if(!S.revealed)return;dragX=x;isDrag=true;card.style.transition='none';};
+  const oM=x=>{
+    if(!isDrag||dragX===null)return;
+    const dx=x-dragX;card.style.transform=`translateX(${dx}px) rotate(${dx*.045}deg)`;
+    const p=Math.min(Math.abs(dx)/90,1);
+    if(dx>15){document.getElementById('ov-g').style.opacity=String(p*.85);document.getElementById('ov-m').style.opacity='0';document.getElementById('sh-r').style.opacity=String(Math.min(p*1.4,1));document.getElementById('sh-l').style.opacity='0';}
+    else if(dx<-15){document.getElementById('ov-m').style.opacity=String(p*.85);document.getElementById('ov-g').style.opacity='0';document.getElementById('sh-l').style.opacity=String(Math.min(p*1.4,1));document.getElementById('sh-r').style.opacity='0';}
+    else clrOvs();
+  };
+  const oE=x=>{
+    if(!isDrag||dragX===null)return;isDrag=false;const dx=x-dragX;dragX=null;
+    if(Math.abs(dx)>80){const dir=dx>0?1:-1;card.style.transition='transform .35s cubic-bezier(.4,0,.8,1),opacity .3s';card.style.transform=`translateX(${dir*550}px) rotate(${dir*22}deg)`;card.style.opacity='0';setTimeout(()=>{card.style.opacity='1';rate(dx>0);},350);}
+    else{resetCardPos();clrOvs();}
+  };
+  card.addEventListener('touchstart',e=>oS(e.touches[0].clientX),{passive:true});
+  card.addEventListener('touchmove', e=>oM(e.touches[0].clientX),{passive:true});
+  card.addEventListener('touchend',  e=>oE(e.changedTouches[0].clientX));
+  card.addEventListener('mousedown', e=>oS(e.clientX));
+  window.addEventListener('mousemove',e=>{if(isDrag)oM(e.clientX);});
+  window.addEventListener('mouseup',  e=>{if(isDrag)oE(e.clientX);});
+}
+
+/* ══════════════════════════════════════
+   KEYBOARD
+══════════════════════════════════════ */
+document.addEventListener('keydown',e=>{
+  const studying=document.getElementById('s-study').classList.contains('active');
+  if(!studying)return;
+  if(document.getElementById('panel').classList.contains('open'))return;
+  if(e.target.tagName==='INPUT'||e.target.tagName==='SELECT')return;
+  if(e.code==='Space'){e.preventDefault();if(!S.revealed)reveal();}
+  if(e.key==='ArrowLeft'||e.key==='1')rate(false);
+  if(e.key==='ArrowRight'||e.key==='2')rate(true);
+  if(e.key==='t'||e.key==='T')toggleMode();
+  if(e.key==='h'||e.key==='H')showHint();
+});
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('s-study').classList.contains('active'))return;
+  if(e.target.id==='type-input'&&e.key==='Enter')checkTyping();
+});
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  load();ensureCards();save();renderHome();initSwipe();
+});
+</script>
+</body>
+</html>
